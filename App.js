@@ -1,12 +1,32 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import LoginScreen from './src/screens/LoginScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useFonts } from 'expo-font';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [loaded] = useFonts({
+    Montserrat: require('./assets/fonts/Montserrat.ttf'),
+    OpenSansBold: require('./assets/fonts/OpenSans-Bold.ttf'),
+    OpenSansRegular: require('./assets/fonts/OpenSans-Regular.ttf'),
+    OpenSansSemiBold: require('./assets/fonts/OpenSans-SemiBold.ttf'),
+    SpaceMonoRegular: require('./assets/fonts/SpaceMono-Regular.ttf'),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Login" component={LoginScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+
   );
 }
 
