@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // const baseUrl = process.env.REACT_APP_API_URL;
 const baseUrl = "https://react-socket-chat-hpormachi.herokuapp.com/api";
+// const baseUrl = "http://localhost:8080/api";
 
 export const fetchSinToken = async (endpoint, data, method = 'GET') => {
 
