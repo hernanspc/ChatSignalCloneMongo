@@ -11,48 +11,14 @@ const LoginScreen = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const { login } = useContext(AuthContext);
+    const { login, leerStorage } = useContext(AuthContext);
 
     const todoOk = () => {
         return (email.length > 0 && password.length > 0) ? true : false;
     }
 
-    // useEffect(() => {
-    //     navigation.setOptions({
-    //         headerLargeTitle: true,
-    //         headerTitle: "Home",
-    //         headerRight: () => (
-    //             <TouchableOpacity
-    //                 onPress={() => navigation.navigate("Stack")}
-    //                 style={{
-    //                     backgroundColor: "purple",
-    //                     width: 30,
-    //                     height: 30,
-    //                     borderRadius: 10,
-    //                     justifyContent: "center",
-    //                 }}
-    //             >
-    //                 <Text
-    //                     style={{
-    //                         fontSize: 20,
-    //                         textAlign: "center",
-    //                         color: "white",
-    //                     }}
-    //                 >+</Text>
-    //             </TouchableOpacity>
-    //         ),
-    //         headerSearchBarOptions: {
-    //             placeholder: "Friends",
-    //             onChangeText: (event) => {
-    //                 searchFilterFunction(event.nativeEvent.text);
-    //             },
-    //         },
-    //     });
-    // }, [navigation]);
-
     const signIn = () => {
         login(email.toLowerCase(), password.toLowerCase());
-        console.log('signIn called')
     }
 
     return (
@@ -87,7 +53,7 @@ const LoginScreen = () => {
                     containerStyle={styles.button}
                     onPress={signIn}
                     title="Login"
-                    disabled={todoOk ? false : true}
+                // disabled={todoOk ? false : true}
                 />
                 <Button
                     containerStyle={styles.button}
@@ -96,6 +62,11 @@ const LoginScreen = () => {
                     }}
                     type="outline"
                     title="Register"
+                />
+
+                <Button
+                    title="leerStorage"
+                    onPress={leerStorage}
                 />
 
             </View>

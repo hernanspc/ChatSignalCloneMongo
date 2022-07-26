@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const useSocket = (serverPath) => {
 
@@ -9,8 +9,10 @@ export const useSocket = (serverPath) => {
 
     const conectarSocket = useCallback(() => {
 
-        const token = AsyncStorage?.getItem('token');
-
+        const token = AsyncStorage?.getItem('@token');
+        if (token) {
+            console.log('token ', token)
+        }
         const socketTemp = io.connect(serverPath, {
             transports: ['websocket'],
             autoConnect: true,

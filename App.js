@@ -14,6 +14,7 @@ import { AuthProvider, AuthContext } from './src/auth/AuthContext';
 
 import { ChatProvider } from './src/context/chat/ChatContext';
 import { SocketProvider } from './src/context/SocketContext';
+import { AppRouter } from "./src/router/AppRouter";
 
 const Stack = createNativeStackNavigator();
 
@@ -36,7 +37,7 @@ export default function App() {
   //   return null;
   // }
 
-  // const {  } = useContext(AuthContext);
+  // const { auth, verificaToken } = useContext(AuthContext);
 
   // useEffect(() => {
   //   verificaToken();
@@ -49,7 +50,9 @@ export default function App() {
         <AuthProvider>
           <SocketProvider>
 
-            <NavigationContainer>
+            <AppRouter />
+
+            {/* <NavigationContainer>
               <Stack.Navigator
                 screenOptions={globalScreenOptions}
               >
@@ -76,7 +79,7 @@ export default function App() {
                 />
 
               </Stack.Navigator>
-            </NavigationContainer>
+            </NavigationContainer> */}
 
           </SocketProvider>
         </AuthProvider>

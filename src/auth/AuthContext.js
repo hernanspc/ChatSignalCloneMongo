@@ -20,9 +20,13 @@ export const AuthProvider = ({ children }) => {
     const login = async (email, password) => {
         console.log(email, password)
         const resp = await fetchSinToken('login', { email, password }, 'POST');
-        console.log('resp ', resp)
+        console.log('function login: ', resp.token)
         if (resp.ok) {
-            AsyncStorage.getItem('token', resp.token);
+            try {
+                await AsyncStorage.setItem('@token', resp.token)
+            } catch (e) {
+                console.log('funcion login: ', error.message)
+            }
             const { usuario } = resp;
 
             setAuth({
@@ -44,7 +48,7 @@ export const AuthProvider = ({ children }) => {
         const resp = await fetchSinToken('login/new', { nombre, email, password }, 'POST');
 
         if (resp.ok) {
-            await AsyncStorage.getItem('token', resp.token);
+            await AsyncStorage.getItem('@token', resp.token);
             const { usuario } = resp;
 
             setAuth({
@@ -64,9 +68,11 @@ export const AuthProvider = ({ children }) => {
 
     const verificaToken = useCallback(async () => {
 
-        const token = AsyncStorage.getItem('token');
+        const token = await AsyncStorage.getItem('@token');
+        console.log('verificaToken: ', token)
         // Si token no existe
         if (!token) {
+            console.log('null setAuth')
             setAuth({
                 uid: null,
                 checking: false,
@@ -79,8 +85,14 @@ export const AuthProvider = ({ children }) => {
         }
 
         const resp = await fetchConToken('login/renew');
+        console.log('fetchConToken ', resp)
         if (resp.ok) {
-            AsyncStorage.setItem('token', resp.token);
+            try {
+                await AsyncStorage.setItem('@token', resp?.token)
+            } catch (e) {
+                // saving error
+            }
+            // AsyncStorage.setItem('@token', resp.token);
             const { usuario } = resp;
 
             setAuth({
@@ -107,11 +119,16 @@ export const AuthProvider = ({ children }) => {
     }, [])
 
     const logout = async () => {
-        await AsyncStorage.removeItem('token');
+        await AsyncStorage.removeItem('@token');
         setAuth({
             checking: false,
             logged: false,
         });
+    }
+
+    const leerStorage = async () => {
+        const data = await AsyncStorage.getItem('@token');
+        console.log('data ', data)
     }
 
 
@@ -122,6 +139,7 @@ export const AuthProvider = ({ children }) => {
             register,
             verificaToken,
             logout,
+            leerStorage
         }}>
             {children}
         </AuthContext.Provider>

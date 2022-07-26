@@ -1,13 +1,17 @@
-import React, { useLayoutEffect } from 'react'
+import React, { useLayoutEffect, useContext } from 'react'
 import { useNavigation } from '@react-navigation/native'
 
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native'
 import CustomListItem from '../components/CustomListItem'
-import { Avatar } from 'react-native-elements'
+import { Avatar, Button } from 'react-native-elements'
 import { AntDesign, SimpleLineIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
+import { AuthContext } from '../auth/AuthContext'
 
 const HomeScreen = () => {
     const navigation = useNavigation();
+
+    const { leerStorage } = useContext(AuthContext);
+
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -72,6 +76,10 @@ const HomeScreen = () => {
                 <CustomListItem id={1} chatName={"Hernan"} enterChat={enterChat} />
                 <CustomListItem id={2} chatName={"Luchito"} enterChat={enterChat} />
                 <CustomListItem id={3} chatName={"Adriancito"} enterChat={enterChat} />
+                <Button
+                    title="leerStorage"
+                    onPress={leerStorage}
+                />
             </ScrollView>
         </SafeAreaView>
     )
