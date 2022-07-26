@@ -13,6 +13,7 @@ const CustomListItem = ({ id, chatName, online, photoUrl, enterChat, email }) =>
         >
             <Avatar
                 rounded
+                size="medium"
                 source={photoUrl ?
                     { uri: `data:image/jpeg;base64,${photoUrl}` }
                     :

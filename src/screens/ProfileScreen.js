@@ -7,8 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 const ProfileScreen = () => {
     const navigation = useNavigation();
     const { auth } = useContext(AuthContext);
-    const { uid, photoUrl } = auth;
-
+    const { uid, photoUrl, name } = auth;
+    console.log('auth ', auth)
     useLayoutEffect(() => {
         navigation.setOptions({
             title: "Configuración de Perfil",
@@ -34,7 +34,7 @@ const ProfileScreen = () => {
                 <Avatar.Accessory onPress={() => console.log('Press')} size={40} />
 
             </Avatar>
-            <Text>ProfileScreen</Text>
+            <Text>{name}</Text>
         </View>
     )
 }
