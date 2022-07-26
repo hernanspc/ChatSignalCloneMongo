@@ -8,6 +8,9 @@ import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import HomeScreen from '../screens/HomeScreen';
 import ChatScreen from '../screens/ChatScreen';
+import moment from 'moment';
+import 'moment/locale/es';
+moment.locale('es');
 
 const Stack = createNativeStackNavigator();
 const globalScreenOptions = {

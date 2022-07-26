@@ -12,6 +12,7 @@ import { StatusBar } from 'expo-status-bar';
 import { ChatContext } from '../context/chat/ChatContext';
 import { AuthContext } from '../auth/AuthContext';
 import { SocketContext } from '../context/SocketContext';
+import { horaMes } from '../helpers/horaMes'
 
 const ChatScreen = () => {
     const navigation = useNavigation();
@@ -123,7 +124,7 @@ const ChatScreen = () => {
                                         /> */}
                                         <Text style={styles.recieverText}>{msg.mensaje}</Text>
                                         <Text style={styles.recieverName}>Yo mismo</Text>
-                                        <Text style={styles.recieverTime}>{msg.createdAt}</Text>
+                                        <Text style={styles.recieverTime}>{horaMes(msg.createdAt)}</Text>
                                     </View>
                                 ) : (
                                     <View style={styles.sender}>
@@ -144,7 +145,7 @@ const ChatScreen = () => {
                                         /> */}
                                         <Text style={styles.senderText}>{msg.mensaje}</Text>
                                         <Text style={styles.senderName}>{route?.params?.chatName}</Text>
-                                        <Text style={styles.senderTime}>{msg.createdAt}</Text>
+                                        <Text style={styles.senderTime}>{horaMes(msg.createdAt)}</Text>
 
                                     </View>
                                 )
