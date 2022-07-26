@@ -1,21 +1,21 @@
 import React, { useLayoutEffect, useContext } from 'react'
 import { useNavigation } from '@react-navigation/native'
-
+import { fetchConToken, fetchSinToken } from '../helpers/fetch';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native'
 import CustomListItem from '../components/CustomListItem'
 import { Avatar, Button } from 'react-native-elements'
 import { AntDesign, SimpleLineIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { AuthContext } from '../auth/AuthContext'
 import { ChatContext } from '../context/chat/ChatContext';
+import { types } from '../types/types'
 
 const HomeScreen = () => {
     const navigation = useNavigation();
 
     const { leerStorage, logout, auth } = useContext(AuthContext);
-    const { chatState } = useContext(ChatContext);
+    const { chatState, dispatch } = useContext(ChatContext);
     const { uid } = auth;
-
-    console.log('uid ', auth)
+    const { chatActivo } = chatState;
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -64,12 +64,35 @@ const HomeScreen = () => {
 
     }, [])
 
-    const enterChat = (id, chatName) => {
-        console.log('enterChat ')
+    const enterChat = async (id, chatName) => {
+
+        dispatch({
+            type: types.activarChat,
+            // payload: usuario.uid
+            payload: id
+        });
+
+        // Cargar los mensajes del chat
+        const resp = await fetchConToken(`mensajes/${id}`);
+        console.log('resp ', resp)
+        dispatch({
+            type: types.cargarMensajes,
+            payload: resp.mensajes
+        });
+
+        // if (chatState.chatActivo) {
+        //     console.log('chatActivo ')
+        //     navigation.navigate("ChatScreen", {
+        //         id: id,
+        //         chatName
+        //     })
+        // }
         navigation.navigate("ChatScreen", {
             id: id,
             chatName
         })
+
+
     }
 
     return (
@@ -79,16 +102,15 @@ const HomeScreen = () => {
                     chatState.usuarios
                         .filter(user => user.uid !== uid)
                         .map((usuario) => (
-                            <>
-                                {console.log('usuario ', usuario.nombre)}
-                                <CustomListItem
-                                    id={usuario.uid}
-                                    chatName={usuario.nombre}
-                                    enterChat={enterChat}
-                                    online={usuario.online}
-                                    urlProfile={"https://p.kindpng.com/picc/s/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"}
-                                />
-                            </>
+                            <CustomListItem
+                                key={usuario.uid}
+                                id={usuario.uid}
+                                chatName={usuario.nombre}
+                                enterChat={enterChat}
+                                online={usuario.online}
+                                email={usuario.email}
+                                urlProfile={"https://p.kindpng.com/picc/s/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"}
+                            />
                         ))
                 }
                 <Button

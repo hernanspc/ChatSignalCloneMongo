@@ -6,7 +6,6 @@ const baseUrl = "https://react-socket-chat-hpormachi.herokuapp.com/api";
 export const fetchSinToken = async (endpoint, data, method = 'GET') => {
 
     const url = `${baseUrl}/${endpoint}`;
-    console.log('url ', url)
     if (method === 'GET') {
         const resp = await fetch(url);
         return await resp.json();
@@ -29,7 +28,6 @@ export const fetchConToken = async (endpoint, data, method = 'GET') => {
 
     const url = `${baseUrl}/${endpoint}`;
     const token = await AsyncStorage.getItem('@token') || '';
-    console.log('fetchConToken ', token)
     if (method === 'GET') {
         const resp = await fetch(url, {
             headers: {

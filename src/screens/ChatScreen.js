@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useLayoutEffect, useState, useContext } from 'react'
 import {
     StyleSheet, Text, View,
     TouchableOpacity, SafeAreaView,
@@ -9,13 +9,19 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { Avatar } from 'react-native-elements';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
+import { ChatContext } from '../context/chat/ChatContext';
+import { AuthContext } from '../auth/AuthContext';
 
 const ChatScreen = () => {
     const navigation = useNavigation();
     const route = useRoute();
 
+    const { chatState } = useContext(ChatContext);
+    const { auth } = useContext(AuthContext);
+
     const [input, setInput] = useState("")
 
+    console.log('chatState.mensajes ', chatState.mensajes)
     useLayoutEffect(() => {
         navigation.setOptions({
             title: "Chat",
@@ -66,7 +72,6 @@ const ChatScreen = () => {
     }, [navigation])
 
     const sendMessage = () => {
-
         //insetar mensaje
         console.log("sendMessage")
     }
@@ -86,12 +91,11 @@ const ChatScreen = () => {
                     <>
                         <ScrollView style={{ paddingTop: 15 }}>
                             {/* Chat goes on */}
-                            {/* {messages.map(({ id, data }) =>
-                                data.email === auth.currentUser ? (
+                            {chatState.mensajes.map((msg) =>
+                                msg.para === auth.uid ? (
                                     <View style={styles.reciever}>
                                         <Avatar
                                             position="absolute"
-                                            
                                             containerStyle={{
                                                 position: 'absolute',
                                                 bottom: -15,
@@ -113,7 +117,7 @@ const ChatScreen = () => {
                                         <Text style={styles.senderText}>mensaje</Text>
                                     </View>
                                 )
-                            )} */}
+                            )}
                         </ScrollView>
                         <View style={styles.footer}>
                             <TextInput

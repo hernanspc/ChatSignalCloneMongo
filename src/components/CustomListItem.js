@@ -2,12 +2,12 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { ListItem, Avatar, Badge } from 'react-native-elements'
 
-const CustomListItem = ({ id, chatName, online, urlProfile, enterChat }) => {
+const CustomListItem = ({ id, chatName, online, urlProfile, enterChat, email }) => {
     return (
         <ListItem
             key={id}
             onPress={() =>
-                enterChat(id, chatName, online, urlProfile)
+                enterChat(id, chatName, online, urlProfile, email)
             }
             bottomDivider
         >
@@ -34,7 +34,7 @@ const CustomListItem = ({ id, chatName, online, urlProfile, enterChat }) => {
                     numberOfLines={1}
                     ellipsizeMode="tail"
                 >
-                    This is a test subtitle
+                    {email}
                 </ListItem.Subtitle>
             </ListItem.Content>
         </ListItem>

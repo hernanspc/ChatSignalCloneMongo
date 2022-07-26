@@ -19,7 +19,6 @@ const RegisterScreen = () => {
     }, [navigation])
 
     const register = () => {
-        console.log('register')
         //guardar en contexto
         navigation.navigate('Home');
     }

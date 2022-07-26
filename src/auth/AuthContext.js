@@ -18,9 +18,7 @@ export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState(initialState)
 
     const login = async (email, password) => {
-        console.log(email, password)
         const resp = await fetchSinToken('login', { email, password }, 'POST');
-        console.log('function login: ', resp.token)
         if (resp.ok) {
             try {
                 await AsyncStorage.setItem('@token', resp.token)
@@ -69,10 +67,8 @@ export const AuthProvider = ({ children }) => {
     const verificaToken = useCallback(async () => {
 
         const token = await AsyncStorage.getItem('@token');
-        console.log('verificaToken: ', token)
         // Si token no existe
         if (!token) {
-            console.log('null setAuth')
             setAuth({
                 uid: null,
                 checking: false,
