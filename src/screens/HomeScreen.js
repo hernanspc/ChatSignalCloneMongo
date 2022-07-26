@@ -6,12 +6,16 @@ import CustomListItem from '../components/CustomListItem'
 import { Avatar, Button } from 'react-native-elements'
 import { AntDesign, SimpleLineIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { AuthContext } from '../auth/AuthContext'
+import { ChatContext } from '../context/chat/ChatContext';
 
 const HomeScreen = () => {
     const navigation = useNavigation();
 
-    const { leerStorage, logout } = useContext(AuthContext);
+    const { leerStorage, logout, auth } = useContext(AuthContext);
+    const { chatState } = useContext(ChatContext);
+    const { uid } = auth;
 
+    console.log('uid ', auth)
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -71,9 +75,16 @@ const HomeScreen = () => {
     return (
         <SafeAreaView>
             <ScrollView style={styles.container}>
-                <CustomListItem id={1} chatName={"Hernan"} enterChat={enterChat} />
-                <CustomListItem id={2} chatName={"Luchito"} enterChat={enterChat} />
-                <CustomListItem id={3} chatName={"Adriancito"} enterChat={enterChat} />
+                {
+                    chatState.usuarios
+                        .filter(user => user.uid !== uid)
+                        .map((usuario) => (
+                            <>
+                                {console.log('usuario ', usuario.nombre)}
+                                <CustomListItem id={usuario.uid} chatName={usuario.nombre} enterChat={enterChat} />
+                            </>
+                        ))
+                }
                 <Button
                     title="leerStorage"
                     onPress={leerStorage}
