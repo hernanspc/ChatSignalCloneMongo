@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { Button, Input, Image } from 'react-native-elements'
+import { AuthContext } from '../auth/AuthContext';
 
 const LoginScreen = () => {
     const navigation = useNavigation();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const { login } = useContext(AuthContext);
+
+    const todoOk = () => {
+        return (email.length > 0 && password.length > 0) ? true : false;
+    }
 
     // useEffect(() => {
     //     navigation.setOptions({
@@ -44,6 +51,7 @@ const LoginScreen = () => {
     // }, [navigation]);
 
     const signIn = () => {
+        login(email.toLowerCase(), password.toLowerCase());
         console.log('signIn called')
     }
 
@@ -79,6 +87,7 @@ const LoginScreen = () => {
                     containerStyle={styles.button}
                     onPress={signIn}
                     title="Login"
+                    disabled={todoOk ? false : true}
                 />
                 <Button
                     containerStyle={styles.button}

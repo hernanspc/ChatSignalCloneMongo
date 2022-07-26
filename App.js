@@ -1,13 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { StyleSheet, Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useFonts } from 'expo-font';
+
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import ChatScreen from './src/screens/ChatScreen';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useFonts } from 'expo-font';
+
+import { AuthProvider, AuthContext } from './src/auth/AuthContext';
+
+import { ChatProvider } from './src/context/chat/ChatContext';
+import { SocketProvider } from './src/context/SocketContext';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,47 +24,64 @@ const globalScreenOptions = {
 }
 
 export default function App() {
-  const [loaded] = useFonts({
-    Montserrat: require('./assets/fonts/Montserrat.ttf'),
-    OpenSansBold: require('./assets/fonts/OpenSans-Bold.ttf'),
-    OpenSansRegular: require('./assets/fonts/OpenSans-Regular.ttf'),
-    OpenSansSemiBold: require('./assets/fonts/OpenSans-SemiBold.ttf'),
-    SpaceMonoRegular: require('./assets/fonts/SpaceMono-Regular.ttf'),
-  });
+  // const [loaded] = useFonts({
+  //   Montserrat: require('./assets/fonts/Montserrat.ttf'),
+  //   OpenSansBold: require('./assets/fonts/OpenSans-Bold.ttf'),
+  //   OpenSansRegular: require('./assets/fonts/OpenSans-Regular.ttf'),
+  //   OpenSansSemiBold: require('./assets/fonts/OpenSans-SemiBold.ttf'),
+  //   SpaceMonoRegular: require('./assets/fonts/SpaceMono-Regular.ttf'),
+  // });
 
-  if (!loaded) {
-    return null;
-  }
+  // if (!loaded) {
+  //   return null;
+  // }
+
+  // const {  } = useContext(AuthContext);
+
+  // useEffect(() => {
+  //   verificaToken();
+  // }, [verificaToken])
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={globalScreenOptions}
-      >
 
-        <Stack.Screen options={{
-          title: 'Lets Sign Up',
-        }}
-          name="Login"
-          component={LoginScreen}
-        />
-        <Stack.Screen
-          name="Register"
-          component={RegisterScreen}
-        />
+    <>
+      <ChatProvider>
+        <AuthProvider>
+          <SocketProvider>
 
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-        />
+            <NavigationContainer>
+              <Stack.Navigator
+                screenOptions={globalScreenOptions}
+              >
 
-        <Stack.Screen
-          name="ChatScreen"
-          component={ChatScreen}
-        />
+                <Stack.Screen options={{
+                  title: 'Lets Sign Up',
+                }}
+                  name="Login"
+                  component={LoginScreen}
+                />
+                <Stack.Screen
+                  name="Register"
+                  component={RegisterScreen}
+                />
 
-      </Stack.Navigator>
-    </NavigationContainer>
+                <Stack.Screen
+                  name="Home"
+                  component={HomeScreen}
+                />
+
+                <Stack.Screen
+                  name="ChatScreen"
+                  component={ChatScreen}
+                />
+
+              </Stack.Navigator>
+            </NavigationContainer>
+
+          </SocketProvider>
+        </AuthProvider>
+      </ChatProvider>
+    </>
 
   );
 }
