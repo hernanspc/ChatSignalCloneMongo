@@ -42,11 +42,16 @@ export const AuthProvider = ({ children }) => {
     }
 
     const register = async (nombre, email, password) => {
-
+        console.log('register() ', nombre, email, password)
         const resp = await fetchSinToken('login/new', { nombre, email, password }, 'POST');
 
         if (resp.ok) {
-            await AsyncStorage.getItem('@token', resp.token);
+            try {
+                await AsyncStorage.getItem('@token', resp.token);
+            } catch (e) {
+                console.log('register: ', error.message)
+            }
+
             const { usuario } = resp;
 
             setAuth({

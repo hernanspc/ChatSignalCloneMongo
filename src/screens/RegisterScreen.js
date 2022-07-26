@@ -8,7 +8,7 @@ import { AuthContext } from '../auth/AuthContext'
 const RegisterScreen = () => {
     const navigation = useNavigation();
 
-    const { register } = useContext(AuthContext);
+    const { register, leerStorage } = useContext(AuthContext);
 
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
@@ -23,18 +23,18 @@ const RegisterScreen = () => {
 
     const registerUser = async () => {
         //guardar en contexto 
-        // const msg = await register(name, email, password);
+        const msg = await register(name, email.toLowerCase(), password);
 
-        // if (msg !== true) {
-        // Swakl.fire('Error', msg, 'error');
-        Alert.alert(
-            "Alert Title",
-            "My Alert Msg",
-            [
-                { text: "OK", onPress: () => console.log("OK Pressed") }
-            ]
-        );
-        // }
+        if (msg !== true) {
+            // Swakl.fire('Error', msg, 'error');
+            Alert.alert(
+                "Alert Title",
+                "My Alert Msg",
+                [
+                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+            );
+        }
     }
 
     return (
@@ -67,12 +67,16 @@ const RegisterScreen = () => {
                     value={password}
                     onChangeText={(text) => setPassword(text)}
                 />
-                <Input
+                {/* <Input
                     placeholder='Profile Picture URL (optional)'
                     type="text"
                     value={imageUrl}
                     onChangeText={(text) => setImageUrl(text)}
                     onSubmitEditing={register}
+                /> */}
+                <Button
+                    title="leerStorage"
+                    onPress={leerStorage}
                 />
             </View>
             <Button
