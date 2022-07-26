@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import HomeScreen from '../screens/HomeScreen';
+import ChatScreen from '../screens/ChatScreen';
 
 const Stack = createNativeStackNavigator();
 const globalScreenOptions = {
@@ -37,10 +38,17 @@ export const AppRouter = () => {
                 >
                     {
                         auth?.logged ? (
-                            <Stack.Screen
-                                name="HomeScreen"
-                                component={HomeScreen}
-                            />
+                            <>
+                                <Stack.Screen
+                                    name="HomeScreen"
+                                    component={HomeScreen}
+                                />
+                                <Stack.Screen
+                                    name="ChatScreen"
+                                    component={ChatScreen}
+                                />
+                            </>
+
                         ) : (
                             <>
                                 <Stack.Screen options={{

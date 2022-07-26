@@ -7,12 +7,10 @@ export const useSocket = (serverPath) => {
     const [socket, setSocket] = useState(null);
     const [online, setOnline] = useState(false);
 
-    const conectarSocket = useCallback(() => {
+    const conectarSocket = useCallback(async () => {
 
-        const token = AsyncStorage?.getItem('@token');
-        if (token) {
-            console.log('token ', token)
-        }
+        const token = await AsyncStorage?.getItem('@token');
+
         const socketTemp = io.connect(serverPath, {
             transports: ['websocket'],
             autoConnect: true,

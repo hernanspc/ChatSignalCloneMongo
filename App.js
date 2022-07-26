@@ -37,12 +37,6 @@ export default function App() {
   //   return null;
   // }
 
-  // const { auth, verificaToken } = useContext(AuthContext);
-
-  // useEffect(() => {
-  //   verificaToken();
-  // }, [verificaToken])
-
   return (
 
     <>
