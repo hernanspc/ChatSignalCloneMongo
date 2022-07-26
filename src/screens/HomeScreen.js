@@ -1,5 +1,6 @@
-import { useNavigation } from '@react-navigation/native'
 import React, { useLayoutEffect } from 'react'
+import { useNavigation } from '@react-navigation/native'
+
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native'
 import CustomListItem from '../components/CustomListItem'
 import { Avatar } from 'react-native-elements'
@@ -57,16 +58,20 @@ const HomeScreen = () => {
 
     }, [])
 
-    const enterChat = () => {
+    const enterChat = (id, chatName) => {
         console.log('enterChat ')
+        navigation.navigate("ChatScreen", {
+            id: id,
+            chatName
+        })
     }
 
     return (
         <SafeAreaView>
             <ScrollView style={styles.container}>
-                <CustomListItem chatName={"Hernan"} enterChat={enterChat} />
-                <CustomListItem chatName={"Luchito"} enterChat={enterChat} />
-                <CustomListItem chatName={"Jimmito"} enterChat={enterChat} />
+                <CustomListItem id={1} chatName={"Hernan"} enterChat={enterChat} />
+                <CustomListItem id={2} chatName={"Luchito"} enterChat={enterChat} />
+                <CustomListItem id={3} chatName={"Adriancito"} enterChat={enterChat} />
             </ScrollView>
         </SafeAreaView>
     )

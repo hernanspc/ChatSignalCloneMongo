@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import HomeScreen from './src/screens/HomeScreen';
+import ChatScreen from './src/screens/ChatScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
 
@@ -49,6 +50,11 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
+        />
+
+        <Stack.Screen
+          name="ChatScreen"
+          component={ChatScreen}
         />
 
       </Stack.Navigator>
