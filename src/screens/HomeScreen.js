@@ -28,7 +28,8 @@ const HomeScreen = () => {
                 <View style={{ marginLeft: 0, marginBottom: 5 }}>
                     <TouchableOpacity activeOpacity={0.5} onPress={
                         () => {
-                            console.log('Ir a configurar')
+                            console.log('Ir a configurar');
+                            navigation.navigate("ProfileScreen")
                         }
                     }>
                         <Avatar

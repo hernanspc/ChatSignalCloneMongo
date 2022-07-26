@@ -64,10 +64,10 @@ const LoginScreen = () => {
                     title="Register"
                 />
 
-                <Button
+                {/* <Button
                     title="leerStorage"
                     onPress={leerStorage}
-                />
+                /> */}
 
             </View>
             <View style={{ height: 100 }}></View>

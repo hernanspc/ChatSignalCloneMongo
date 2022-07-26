@@ -74,10 +74,10 @@ const RegisterScreen = () => {
                     onChangeText={(text) => setImageUrl(text)}
                     onSubmitEditing={register}
                 /> */}
-                <Button
+                {/* <Button
                     title="leerStorage"
                     onPress={leerStorage}
-                />
+                /> */}
             </View>
             <Button
                 containerStyle={styles.button}

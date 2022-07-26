@@ -8,6 +8,7 @@ import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import HomeScreen from '../screens/HomeScreen';
 import ChatScreen from '../screens/ChatScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 import moment from 'moment';
 import 'moment/locale/es';
 moment.locale('es');
@@ -47,6 +48,10 @@ export const AppRouter = () => {
                                 <Stack.Screen
                                     name="ChatScreen"
                                     component={ChatScreen}
+                                />
+                                <Stack.Screen
+                                    name="ProfileScreen"
+                                    component={ProfileScreen}
                                 />
                             </>
 
