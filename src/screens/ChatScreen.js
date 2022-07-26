@@ -2,7 +2,8 @@ import React, { useLayoutEffect, useState } from 'react'
 import {
     StyleSheet, Text, View,
     TouchableOpacity, SafeAreaView,
-    KeyboardAvoidingView, Platform, ScrollView, TextInput
+    KeyboardAvoidingView, Platform, ScrollView,
+    TextInput, TouchableWithoutFeedback, Keyboard
 } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { Avatar } from 'react-native-elements';
@@ -14,7 +15,6 @@ const ChatScreen = () => {
     const route = useRoute();
 
     const [input, setInput] = useState("")
-    console.log('route ', route?.params)
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -65,6 +65,12 @@ const ChatScreen = () => {
         })
     }, [navigation])
 
+    const sendMessage = () => {
+
+        //insetar mensaje
+        console.log("sendMessage")
+    }
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
             <StatusBar style="light" />
@@ -74,25 +80,59 @@ const ChatScreen = () => {
                 style={styles.container}
                 keyboardVerticalOffset={90}
             >
-                <>
-                    <ScrollView>
-                        {/* Chat goes on */}
-                    </ScrollView>
-                    <View style={styles.footer}>
-                        <TextInput
-                            value={input}
-                            onChangeText={(text) => setInput(text)}
-                            placeholder="Signal Message"
-                            style={styles.textInput}
-                        />
-                        <TouchableOpacity
-                            activeOpacity={0.5}
-                            onPress={() => console.log('first')}
-                        >
-                            <Ionicons name='send' size={24} color="#2B68E6" />
-                        </TouchableOpacity>
-                    </View>
-                </>
+                <TouchableWithoutFeedback
+                    onPress={Keyboard.dismiss}
+                >
+                    <>
+                        <ScrollView style={{ paddingTop: 15 }}>
+                            {/* Chat goes on */}
+                            {/* {messages.map(({ id, data }) =>
+                                data.email === auth.currentUser ? (
+                                    <View style={styles.reciever}>
+                                        <Avatar
+                                            position="absolute"
+                                            
+                                            containerStyle={{
+                                                position: 'absolute',
+                                                bottom: -15,
+                                                right: -5
+                                            }}
+                                            bottom={-15}
+                                            left={-5}
+                                            right={-5}
+                                            rounded
+                                            size={30}
+                                            source={{
+                                                uri: "https://static.wikia.nocookie.net/alfondohaysitio/images/2/2d/Nicolas_3ra.png/revision/latest?cb=20211128223821&path-prefix=es"
+                                            }}
+                                        />
+                                        <Text style={styles.recieverText}>mensaje</Text>
+                                    </View>
+                                ) : (
+                                    <View style={styles.sender}>
+                                        <Text style={styles.senderText}>mensaje</Text>
+                                    </View>
+                                )
+                            )} */}
+                        </ScrollView>
+                        <View style={styles.footer}>
+                            <TextInput
+                                value={input}
+                                onChangeText={(text) => setInput(text)}
+                                onSubmitEditing={sendMessage}
+                                placeholder="Signal Message"
+                                style={styles.textInput}
+                            />
+                            <TouchableOpacity
+                                activeOpacity={0.5}
+                                onPress={sendMessage}
+                            >
+                                <Ionicons name='send' size={24} color="#2B68E6" />
+                            </TouchableOpacity>
+                        </View>
+                    </>
+                </TouchableWithoutFeedback>
+
             </KeyboardAvoidingView>
         </SafeAreaView>
     )
@@ -103,6 +143,37 @@ export default ChatScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    reciever: {
+        padding: 15,
+        backgroundColor: "#ECECEC",
+        alignSelf: "flex-end",
+        borderRadius: 20,
+        marginRight: 15,
+        marginBottom: 20,
+        maxWidth: "80%",
+        position: "relative",
+    },
+    sender: {
+        padding: 15,
+        backgroundColor: "#2D68E6",
+        alignSelf: "flex-start",
+        borderRadius: 20,
+        margin: 15,
+        maxWidth: "80%",
+        position: "relative",
+    },
+    senderText: {
+        color: "white",
+        fontWeight: "500",
+        marginLeft: 10,
+        marginBottom: 15,
+    },
+    senderName: {
+        marginLeft: 10,
+        paddingRight: 10,
+        fontWeight: "500",
+        color: "black",
     },
     footer: {
         flexDirection: 'row',
@@ -121,5 +192,11 @@ const styles = StyleSheet.create({
         padding: 10,
         color: "grey",
         borderRadius: 30,
+    },
+    recieverText: {
+
+    },
+    senderText: {
+
     }
 })
