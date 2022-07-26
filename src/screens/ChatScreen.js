@@ -25,7 +25,6 @@ const ChatScreen = () => {
 
     const [mensaje, setMensaje] = useState("")
 
-    // console.log('chatState.mensajes ', chatState.mensajes)
     useLayoutEffect(() => {
         navigation.setOptions({
             title: "Chat",
@@ -38,12 +37,25 @@ const ChatScreen = () => {
                         alignItems: "center",
                     }}
                 >
-                    <Avatar
-                        rounded
-                        source={{
-                            uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKJuxfl_e_W_D8rYjsGrYsZccc1JROU-4ToQ&usqp=CAU"
-                        }}
-                    />
+
+                    {route?.params?.photoUrl ?
+                        <Avatar
+                            rounded
+                            source={{
+                                uri: `data:image/jpeg;base64,${route?.params?.photoUrl}`
+                            }}
+                        />
+                        :
+                        <Avatar
+                            rounded
+                            source={{
+                                uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKJuxfl_e_W_D8rYjsGrYsZccc1JROU-4ToQ&usqp=CAU"
+                            }}
+                        />
+                    }
+
+                    {/* `data:image/jpeg;base64,${route?.params?.chatName.photoUrl}` */}
+                    {/* {router} */}
 
                     <Text
                         style={{ color: "white", marginLeft: 10, fontWeight: "700" }}

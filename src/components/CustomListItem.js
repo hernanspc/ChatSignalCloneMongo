@@ -2,20 +2,23 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { ListItem, Avatar, Badge } from 'react-native-elements'
 
-const CustomListItem = ({ id, chatName, online, urlProfile, enterChat, email }) => {
+const CustomListItem = ({ id, chatName, online, photoUrl, enterChat, email }) => {
     return (
         <ListItem
             key={id}
             onPress={() =>
-                enterChat(id, chatName, online, urlProfile, email)
+                enterChat(id, chatName, online, photoUrl, email)
             }
             bottomDivider
         >
             <Avatar
                 rounded
-                source={{
-                    uri: urlProfile
-                }}
+                source={photoUrl ?
+                    { uri: `data:image/jpeg;base64,${photoUrl}` }
+                    :
+                    { uri: "https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg" }
+                }
+
             >
                 <Badge
                     status={online ? "success" : "error"}

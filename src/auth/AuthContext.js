@@ -81,7 +81,7 @@ export const AuthProvider = ({ children }) => {
         }
 
         const resp = await fetchConToken('login/renew');
-        console.log('fetchConToken ', resp)
+        // console.log('fetchConToken ', resp)
         if (resp.ok) {
             try {
                 await AsyncStorage.setItem('@token', resp?.token)
@@ -97,6 +97,7 @@ export const AuthProvider = ({ children }) => {
                 logged: true,
                 name: usuario.nombre,
                 email: usuario.email,
+                photoUrl: usuario.photoUrl,
             });
 
             return true;
