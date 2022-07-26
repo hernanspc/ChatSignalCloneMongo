@@ -22,7 +22,6 @@ const RegisterScreen = () => {
     }, [navigation])
 
     const registerUser = async () => {
-        console.log('print: ', name, email.toLowerCase(), password)
         //guardar en contexto 
         const msg = await register(name, email.toLowerCase(), password);
 
