@@ -86,7 +86,7 @@ const HomeScreen = () => {
 
         // Cargar los mensajes del chat
         const resp = await fetchConToken(`mensajes/${id}`);
-        console.log('resp ', resp)
+        // console.log('resp ', resp)
         dispatch({
             type: types.cargarMensajes,
             payload: resp.mensajes

@@ -22,6 +22,7 @@ const ChatScreen = () => {
 
     const { chatState } = useContext(ChatContext);
     const { auth } = useContext(AuthContext);
+    const { photoUrl } = auth;
 
     const [mensaje, setMensaje] = useState("")
 
@@ -109,7 +110,7 @@ const ChatScreen = () => {
                             {chatState.mensajes.map((msg) =>
                                 msg.de === auth.uid ? (
                                     <View style={styles.reciever}>
-                                        {/* <Avatar
+                                        <Avatar
                                             position="absolute"
                                             containerStyle={{
                                                 position: 'absolute',
@@ -120,17 +121,17 @@ const ChatScreen = () => {
                                             right={-5}
                                             rounded
                                             size={30}
-                                            source={{
-                                                uri: "https://static.wikia.nocookie.net/alfondohaysitio/images/2/2d/Nicolas_3ra.png/revision/latest?cb=20211128223821&path-prefix=es"
-                                            }}
-                                        /> */}
+                                            source={photoUrl ? {
+                                                uri: `data:image/jpeg;base64,${photoUrl}`
+                                            } : { uri: "https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg" }}
+                                        />
                                         <Text style={styles.recieverText}>{msg.mensaje}</Text>
                                         <Text style={styles.recieverName}>Yo mismo</Text>
                                         <Text style={styles.recieverTime}>{horaMes(msg.createdAt)}</Text>
                                     </View>
                                 ) : (
                                     <View style={styles.sender}>
-                                        {/* <Avatar
+                                        <Avatar
                                             position="absolute"
                                             containerStyle={{
                                                 position: 'absolute',
@@ -141,10 +142,12 @@ const ChatScreen = () => {
                                             left={-5}
                                             rounded
                                             size={30}
-                                            source={{
-                                                uri: "https://img5.glartent.com/644/866/3969939256448663.jpg"
-                                            }}
-                                        /> */}
+                                            source={route?.params?.photoUrl ?
+                                                { uri: `data:image/jpeg;base64,${route?.params?.photoUrl}` }
+                                                :
+                                                { uri: "https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg" }
+                                            }
+                                        />
                                         <Text style={styles.senderText}>{msg.mensaje}</Text>
                                         <Text style={styles.senderName}>{route?.params?.chatName}</Text>
                                         <Text style={styles.senderTime}>{horaMes(msg.createdAt)}</Text>
@@ -224,17 +227,19 @@ const styles = StyleSheet.create({
         padding: 10,
         color: "grey",
         borderRadius: 30,
+
     },
     senderText: {
         color: "white",
         fontWeight: "500",
         marginLeft: 10,
-        marginBottom: 15
+        marginBottom: 3
     },
     recieverText: {
         color: "black",
         fontWeight: "500",
         marginLeft: 10,
+        marginBottom: 3
     },
     senderName: {
         fontSize: 10,
