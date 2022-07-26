@@ -1,22 +1,31 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { ListItem, Avatar } from 'react-native-elements'
+import { ListItem, Avatar, Badge } from 'react-native-elements'
 
-const CustomListItem = ({ id, chatName, enterChat }) => {
+const CustomListItem = ({ id, chatName, online, urlProfile, enterChat }) => {
     return (
         <ListItem
             key={id}
             onPress={() =>
-                enterChat(id, chatName)
+                enterChat(id, chatName, online, urlProfile)
             }
             bottomDivider
         >
             <Avatar
                 rounded
                 source={{
-                    uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKJuxfl_e_W_D8rYjsGrYsZccc1JROU-4ToQ&usqp=CAU"
+                    uri: urlProfile
                 }}
-            />
+            >
+                <Badge
+                    status={online ? "success" : "error"}
+                    containerStyle={{
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 22,
+                    }}
+                />
+            </Avatar>
             <ListItem.Content>
                 <ListItem.Title style={{ fontWeight: '800' }}>
                     {chatName}

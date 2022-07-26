@@ -81,7 +81,13 @@ const HomeScreen = () => {
                         .map((usuario) => (
                             <>
                                 {console.log('usuario ', usuario.nombre)}
-                                <CustomListItem id={usuario.uid} chatName={usuario.nombre} enterChat={enterChat} />
+                                <CustomListItem
+                                    id={usuario.uid}
+                                    chatName={usuario.nombre}
+                                    enterChat={enterChat}
+                                    online={usuario.online}
+                                    urlProfile={"https://p.kindpng.com/picc/s/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"}
+                                />
                             </>
                         ))
                 }
