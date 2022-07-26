@@ -24,8 +24,8 @@ const CustomListItem = ({ id, chatName, online, photoUrl, enterChat, email }) =>
                     status={online ? "success" : "error"}
                     containerStyle={{
                         position: 'absolute',
-                        bottom: 0,
-                        left: 22,
+                        bottom: 2,
+                        left: 40,
                     }}
                 />
             </Avatar>
