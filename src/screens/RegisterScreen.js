@@ -1,11 +1,14 @@
-import React, { useLayoutEffect, useState } from 'react'
-import { StyleSheet, View, KeyboardAvoidingView } from 'react-native'
+import React, { useLayoutEffect, useState, useContext } from 'react'
+import { StyleSheet, View, KeyboardAvoidingView, Alert } from 'react-native'
 import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
 import { Button, Input, Text, Image } from 'react-native-elements'
+import { AuthContext } from '../auth/AuthContext'
 
 const RegisterScreen = () => {
     const navigation = useNavigation();
+
+    const { register } = useContext(AuthContext);
 
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
@@ -18,9 +21,20 @@ const RegisterScreen = () => {
         })
     }, [navigation])
 
-    const register = () => {
-        //guardar en contexto
-        navigation.navigate('Home');
+    const registerUser = async () => {
+        //guardar en contexto 
+        // const msg = await register(name, email, password);
+
+        // if (msg !== true) {
+        // Swakl.fire('Error', msg, 'error');
+        Alert.alert(
+            "Alert Title",
+            "My Alert Msg",
+            [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+        );
+        // }
     }
 
     return (
@@ -64,7 +78,7 @@ const RegisterScreen = () => {
             <Button
                 containerStyle={styles.button}
                 raised
-                onPress={register}
+                onPress={registerUser}
                 title="Register"
             />
         </KeyboardAvoidingView >
