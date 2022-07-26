@@ -11,17 +11,20 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { ChatContext } from '../context/chat/ChatContext';
 import { AuthContext } from '../auth/AuthContext';
+import { SocketContext } from '../context/SocketContext';
 
 const ChatScreen = () => {
     const navigation = useNavigation();
     const route = useRoute();
 
+    const { socket } = useContext(SocketContext);
+
     const { chatState } = useContext(ChatContext);
     const { auth } = useContext(AuthContext);
 
-    const [input, setInput] = useState("")
+    const [mensaje, setMensaje] = useState("")
 
-    console.log('chatState.mensajes ', chatState.mensajes)
+    // console.log('chatState.mensajes ', chatState.mensajes)
     useLayoutEffect(() => {
         navigation.setOptions({
             title: "Chat",
@@ -73,8 +76,16 @@ const ChatScreen = () => {
 
     const sendMessage = () => {
         //insetar mensaje
-        console.log("sendMessage")
-        console.log('route ', route.params.chatName)
+        if (mensaje.length === 0) { return; }
+        socket.emit('mensaje-personal', {
+            de: auth.uid,
+            para: chatState.chatActivo,
+            mensaje
+        });
+        setMensaje('')
+        console.log('chatState.mensajes ', chatState.mensajes)
+        // console.log("sendMessage", mensaje)
+        // console.log('route ', route.params)
     }
 
     return (
@@ -93,9 +104,9 @@ const ChatScreen = () => {
                         <ScrollView style={{ paddingTop: 15 }}>
                             {/* Chat goes on */}
                             {chatState.mensajes.map((msg) =>
-                                msg.para === auth.uid ? (
+                                msg.de === auth.uid ? (
                                     <View style={styles.reciever}>
-                                        <Avatar
+                                        {/* <Avatar
                                             position="absolute"
                                             containerStyle={{
                                                 position: 'absolute',
@@ -109,13 +120,14 @@ const ChatScreen = () => {
                                             source={{
                                                 uri: "https://static.wikia.nocookie.net/alfondohaysitio/images/2/2d/Nicolas_3ra.png/revision/latest?cb=20211128223821&path-prefix=es"
                                             }}
-                                        />
+                                        /> */}
                                         <Text style={styles.recieverText}>{msg.mensaje}</Text>
+                                        <Text style={styles.recieverName}>Yo mismo</Text>
                                         <Text style={styles.recieverTime}>{msg.createdAt}</Text>
                                     </View>
                                 ) : (
                                     <View style={styles.sender}>
-                                        <Avatar
+                                        {/* <Avatar
                                             position="absolute"
                                             containerStyle={{
                                                 position: 'absolute',
@@ -129,7 +141,7 @@ const ChatScreen = () => {
                                             source={{
                                                 uri: "https://img5.glartent.com/644/866/3969939256448663.jpg"
                                             }}
-                                        />
+                                        /> */}
                                         <Text style={styles.senderText}>{msg.mensaje}</Text>
                                         <Text style={styles.senderName}>{route?.params?.chatName}</Text>
                                         <Text style={styles.senderTime}>{msg.createdAt}</Text>
@@ -140,8 +152,8 @@ const ChatScreen = () => {
                         </ScrollView>
                         <View style={styles.footer}>
                             <TextInput
-                                value={input}
-                                onChangeText={(text) => setInput(text)}
+                                value={mensaje}
+                                onChangeText={(text) => setMensaje(text)}
                                 onSubmitEditing={sendMessage}
                                 placeholder="Signal Message"
                                 style={styles.textInput}
@@ -227,6 +239,13 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         fontWeight: "500",
         color: "white",
+    },
+    recieverName: {
+        fontSize: 10,
+        marginLeft: 10,
+        paddingRight: 10,
+        fontWeight: "500",
+        color: "#979797",
     },
     recieverTime: {
         fontSize: 10,
