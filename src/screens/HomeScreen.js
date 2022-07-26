@@ -19,7 +19,7 @@ const HomeScreen = () => {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            title: "Signal",
+            title: "UnderChat",
             headerStyle: { backgroundColor: "#FFF" },
             headerTitleStyle: { color: "black" },
             headerTintColor: "black",
