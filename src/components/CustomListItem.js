@@ -18,7 +18,6 @@ const CustomListItem = ({ id, chatName, online, photoUrl, enterChat, email }) =>
                     :
                     { uri: "https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg" }
                 }
-
             >
                 <Badge
                     status={online ? "success" : "error"}

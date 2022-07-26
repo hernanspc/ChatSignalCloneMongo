@@ -37,25 +37,15 @@ const ChatScreen = () => {
                         alignItems: "center",
                     }}
                 >
-
-                    {route?.params?.photoUrl ?
-                        <Avatar
-                            rounded
-                            source={{
-                                uri: `data:image/jpeg;base64,${route?.params?.photoUrl}`
-                            }}
-                        />
-                        :
-                        <Avatar
-                            rounded
-                            source={{
-                                uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKJuxfl_e_W_D8rYjsGrYsZccc1JROU-4ToQ&usqp=CAU"
-                            }}
-                        />
-                    }
-
-                    {/* `data:image/jpeg;base64,${route?.params?.chatName.photoUrl}` */}
-                    {/* {router} */}
+                    <Avatar
+                        size="small"
+                        rounded
+                        source={route?.params?.photoUrl ?
+                            { uri: `data:image/jpeg;base64,${route?.params?.photoUrl}` }
+                            :
+                            { uri: "https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg" }
+                        }
+                    />
 
                     <Text
                         style={{ color: "white", marginLeft: 10, fontWeight: "700" }}
