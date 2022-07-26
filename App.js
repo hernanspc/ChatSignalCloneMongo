@@ -1,8 +1,10 @@
-import { StatusBar } from 'expo-status-bar';
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
+import HomeScreen from './src/screens/HomeScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
 
@@ -32,6 +34,7 @@ export default function App() {
       <Stack.Navigator
         screenOptions={globalScreenOptions}
       >
+
         <Stack.Screen options={{
           title: 'Lets Sign Up',
         }}
@@ -42,6 +45,12 @@ export default function App() {
           name="Register"
           component={RegisterScreen}
         />
+
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
 

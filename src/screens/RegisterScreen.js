@@ -20,6 +20,8 @@ const RegisterScreen = () => {
 
     const register = () => {
         console.log('register')
+        //guardar en contexto
+        navigation.navigate('Home');
     }
 
     return (
@@ -66,7 +68,6 @@ const RegisterScreen = () => {
                 onPress={register}
                 title="Register"
             />
-
         </KeyboardAvoidingView >
     )
 }
