@@ -118,10 +118,10 @@ const HomeScreen = () => {
                             />
                         ))
                 }
-                <Button
+                {/* <Button
                     title="leerStorage"
                     onPress={leerStorage}
-                />
+                /> */}
             </ScrollView>
         </SafeAreaView>
     )
