@@ -34,9 +34,15 @@ const HomeScreen = () => {
                         <Avatar
                             size={40}
                             rounded
-                            source={{
-                                uri: `data:image/jpeg;base64,${auth?.photoUrl}`
-                            }} >
+                            source={auth?.photoUrl ?
+                                {
+                                    uri: `data:image/jpeg;base64,${auth?.photoUrl}`
+                                }
+                                :
+                                {
+                                    uri: "https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg"
+                                }
+                            } >
                             <Avatar.Accessory size={15} />
                         </Avatar>
                     </TouchableOpacity>
