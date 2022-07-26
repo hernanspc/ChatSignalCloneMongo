@@ -74,6 +74,7 @@ const ChatScreen = () => {
     const sendMessage = () => {
         //insetar mensaje
         console.log("sendMessage")
+        console.log('route ', route.params.chatName)
     }
 
     return (
@@ -102,7 +103,6 @@ const ChatScreen = () => {
                                                 right: -5
                                             }}
                                             bottom={-15}
-                                            left={-5}
                                             right={-5}
                                             rounded
                                             size={30}
@@ -110,11 +110,30 @@ const ChatScreen = () => {
                                                 uri: "https://static.wikia.nocookie.net/alfondohaysitio/images/2/2d/Nicolas_3ra.png/revision/latest?cb=20211128223821&path-prefix=es"
                                             }}
                                         />
-                                        <Text style={styles.recieverText}>mensaje</Text>
+                                        <Text style={styles.recieverText}>{msg.mensaje}</Text>
+                                        <Text style={styles.recieverTime}>{msg.createdAt}</Text>
                                     </View>
                                 ) : (
                                     <View style={styles.sender}>
-                                        <Text style={styles.senderText}>mensaje</Text>
+                                        <Avatar
+                                            position="absolute"
+                                            containerStyle={{
+                                                position: 'absolute',
+                                                bottom: -15,
+                                                left: -5
+                                            }}
+                                            bottom={-15}
+                                            left={-5}
+                                            rounded
+                                            size={30}
+                                            source={{
+                                                uri: "https://img5.glartent.com/644/866/3969939256448663.jpg"
+                                            }}
+                                        />
+                                        <Text style={styles.senderText}>{msg.mensaje}</Text>
+                                        <Text style={styles.senderName}>{route?.params?.chatName}</Text>
+                                        <Text style={styles.senderTime}>{msg.createdAt}</Text>
+
                                     </View>
                                 )
                             )}
@@ -173,12 +192,6 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginBottom: 15,
     },
-    senderName: {
-        marginLeft: 10,
-        paddingRight: 10,
-        fontWeight: "500",
-        color: "black",
-    },
     footer: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -197,10 +210,31 @@ const styles = StyleSheet.create({
         color: "grey",
         borderRadius: 30,
     },
-    recieverText: {
-
-    },
     senderText: {
-
+        color: "white",
+        fontWeight: "500",
+        marginLeft: 10,
+        marginBottom: 15
+    },
+    recieverText: {
+        color: "black",
+        fontWeight: "500",
+        marginLeft: 10,
+    },
+    senderName: {
+        fontSize: 10,
+        marginLeft: 10,
+        paddingRight: 10,
+        fontWeight: "500",
+        color: "white",
+    },
+    recieverTime: {
+        fontSize: 10,
+        marginLeft: 10
+    },
+    senderTime: {
+        fontSize: 10,
+        marginLeft: 10,
+        color: "white",
     }
 })
