@@ -10,7 +10,7 @@ import { AuthContext } from '../auth/AuthContext'
 const HomeScreen = () => {
     const navigation = useNavigation();
 
-    const { leerStorage } = useContext(AuthContext);
+    const { leerStorage, logout } = useContext(AuthContext);
 
 
     useLayoutEffect(() => {
@@ -50,13 +50,11 @@ const HomeScreen = () => {
                     </TouchableOpacity>
                     <TouchableOpacity
                         activeOpacity={0.5}
-                        onPress={() => {
-                            console.log("Salir de la app")
-                        }
-                        }>
+                        onPress={logout}
+                    >
                         <Ionicons name="ios-exit-outline" size={24} />
                     </TouchableOpacity>
-                </View>
+                </View >
             )
         })
 

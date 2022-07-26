@@ -28,8 +28,6 @@ export const AppRouter = () => {
         return <Text>Espere por favor</Text>
     }
 
-    console.log('auth ', auth)
-
     return (
         <>
             <NavigationContainer>
@@ -66,9 +64,6 @@ export const AppRouter = () => {
                     }
                 </Stack.Navigator>
             </NavigationContainer>
-
-
-
         </>
     )
 }
