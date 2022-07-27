@@ -10,6 +10,7 @@ const initialState = {
     logged: false,
     name: null,
     email: null,
+    photoUrl: null,
 };
 
 
@@ -33,6 +34,7 @@ export const AuthProvider = ({ children }) => {
                 logged: true,
                 name: usuario.nombre,
                 email: usuario.email,
+                photoUrl: usuario.photoUrl
             });
 
         }
@@ -51,13 +53,14 @@ export const AuthProvider = ({ children }) => {
             }
 
             const { usuario } = resp;
-
+            console.log('res ', usuario.photoUrl)
             setAuth({
                 uid: usuario.uid,
                 checking: false,
                 logged: true,
                 name: usuario.nombre,
                 email: usuario.email,
+                photoUrl: usuario.photoUrl
             });
 
             return true;
@@ -78,6 +81,7 @@ export const AuthProvider = ({ children }) => {
                 logged: false,
                 name: null,
                 email: null,
+                photoUrl: null,
             })
 
             return false;
@@ -111,6 +115,7 @@ export const AuthProvider = ({ children }) => {
                 logged: false,
                 name: null,
                 email: null,
+                photoUrl: null,
             });
 
             return false;
@@ -123,6 +128,7 @@ export const AuthProvider = ({ children }) => {
         setAuth({
             checking: false,
             logged: false,
+            photoUrl: null
         });
     }
 
