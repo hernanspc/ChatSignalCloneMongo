@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useContext } from 'react'
 import { useNavigation } from '@react-navigation/native'
+import { StatusBar } from 'expo-status-bar';
 import { fetchConToken, fetchSinToken } from '../helpers/fetch';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native'
 import CustomListItem from '../components/CustomListItem'
@@ -109,6 +110,7 @@ const HomeScreen = () => {
 
     return (
         <SafeAreaView>
+            <StatusBar style="dark" />
             <ScrollView style={styles.container}>
                 {
                     chatState.usuarios
