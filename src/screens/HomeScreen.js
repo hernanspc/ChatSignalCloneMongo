@@ -14,7 +14,7 @@ const HomeScreen = () => {
 
     const { leerStorage, logout, auth } = useContext(AuthContext);
     const { chatState, dispatch } = useContext(ChatContext);
-    const { uid } = auth;
+    const { uid, photoUrl } = auth;
     const { chatActivo } = chatState;
 
     useLayoutEffect(() => {
@@ -35,16 +35,16 @@ const HomeScreen = () => {
                         <Avatar
                             size={40}
                             rounded
-                            source={auth?.photoUrl ?
+                            source={photoUrl ?
                                 {
-                                    uri: `data:image/jpeg;base64,${auth?.photoUrl}`
+                                    uri: `data:image/jpeg;base64,${photoUrl}`
                                 }
                                 :
                                 {
                                     uri: "https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg"
                                 }
                             } >
-                            <Avatar.Accessory size={15} />
+                            {/* <Avatar.Accessory size={15} /> */}
                         </Avatar>
                     </TouchableOpacity>
                 </View>

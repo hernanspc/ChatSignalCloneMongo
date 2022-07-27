@@ -1,34 +1,53 @@
-import React, { useContext } from 'react';
+import React, { useContext, useLayoutEffect } from 'react';
 import { View, SafeAreaView, StyleSheet } from 'react-native';
 import {
-    Avatar,
     Title,
     Caption,
     Text,
     TouchableRipple,
 } from 'react-native-paper';
-
+import { Avatar } from 'react-native-elements'
 // import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import { AuthContext } from '../auth/AuthContext';
+import { useNavigation } from '@react-navigation/native';
 
 const ProfileScreen = () => {
-
+    const navigation = useNavigation();
     const { auth } = useContext(AuthContext);
     const { name, email, photoUrl } = auth;
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            title: 'Perfil',
+            headerBackTitle: "Inicio"
+        })
+    }, [])
+
     return (
         <SafeAreaView style={styles.container}>
 
             <View style={styles.userInfoSection}>
                 <View style={{ flexDirection: 'row', marginTop: 15 }}>
-                    <Avatar.Image
+                    <Avatar
+                        size={90}
+                        rounded
                         source={photoUrl ?
-                            { uri: `data:image/jpeg;base64,${photoUrl}` }
+                            {
+                                uri: `data:image/jpeg;base64,${photoUrl}`
+                            }
                             :
-                            { uri: "https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg" }
-                        }
-                        size={80}
-                    />
+                            {
+                                uri: "https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg"
+                            }
+                        } >
+                        <Avatar.Accessory
+                            onPress={() => {
+                                console.log('Register');
+                            }}
+                            size={30}
+                        />
+                    </Avatar>
                     <View style={{ marginLeft: 20 }}>
                         <Title style={[styles.title, {
                             marginTop: 15,
@@ -50,7 +69,7 @@ const ProfileScreen = () => {
                 </View>
                 <View style={styles.row}>
                     <Icon name="email" color="#777777" size={20} />
-                    <Text style={{ color: "#777777", marginLeft: 20 }}>john_doe@email.com</Text>
+                    <Text style={{ color: "#777777", marginLeft: 20 }}>{email}</Text>
                 </View>
             </View>
 
