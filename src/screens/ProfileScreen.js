@@ -1,5 +1,5 @@
 import React, { useContext, useLayoutEffect, useState, useEffect } from 'react';
-import { View, SafeAreaView, StyleSheet, Alert } from 'react-native';
+import { View, SafeAreaView, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import {
     Title,
     Caption,
@@ -89,19 +89,6 @@ const ProfileScreen = () => {
         cambiarFotoPerfil(uid, url);
     }
 
-    const loadImage = async () => {
-        if (photoUrl) {
-            setImage(`${photoUrl}`)
-        } else {
-            setImage("https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg")
-        }
-
-    }
-
-    useEffect(() => {
-        loadImage()
-    }, []);
-
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar style="light" />
@@ -110,7 +97,10 @@ const ProfileScreen = () => {
                     <Avatar
                         size={90}
                         rounded
-                        source={{ uri: image }}
+                        // overlayContainerStyle={{ backgroundColor: '#FFF' }}
+                        source={photoUrl ? { uri: photoUrl } :
+                            require('../../assets/Human/avatar-default.jpg')
+                        }
                     >
                         <Avatar.Accessory
                             onPress={pickImage}
