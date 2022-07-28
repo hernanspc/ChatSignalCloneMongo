@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useContext } from 'react'
+import React, { useLayoutEffect, useState, useContext, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StatusBar } from 'expo-status-bar';
 import { fetchConToken, fetchSinToken } from '../helpers/fetch';
@@ -14,9 +14,17 @@ const HomeScreen = () => {
     const navigation = useNavigation();
 
     const { leerStorage, logout, auth } = useContext(AuthContext);
-    const { chatState, dispatch } = useContext(ChatContext);
     const { uid, photoUrl } = auth;
+    const { chatState, dispatch } = useContext(ChatContext);
+
+    const [image, setImage] = useState("")
     const { chatActivo } = chatState;
+
+    useEffect(() => {
+        if (photoUrl) {
+            setImage(photoUrl)
+        }
+    }, [photoUrl])
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -24,12 +32,10 @@ const HomeScreen = () => {
             headerStyle: { backgroundColor: "#FFF" },
             headerTitleStyle: { color: "black" },
             headerTintColor: "black",
-            // < img src = {`data:image/jpeg;base64,${data}`} />
             headerLeft: () => (
                 <View style={{ marginLeft: 0, marginBottom: 5 }}>
                     <TouchableOpacity activeOpacity={0.5} onPress={
                         () => {
-                            console.log('Ir a configurar');
                             navigation.navigate("ProfileScreen")
                         }
                     }>
@@ -38,7 +44,7 @@ const HomeScreen = () => {
                             rounded
                             source={photoUrl ?
                                 {
-                                    uri: `data:image/jpeg;base64,${photoUrl}`
+                                    uri: `${auth?.photoUrl}`
                                 }
                                 :
                                 {

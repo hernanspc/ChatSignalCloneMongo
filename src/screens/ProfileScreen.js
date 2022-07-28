@@ -18,9 +18,9 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const ProfileScreen = () => {
     const navigation = useNavigation();
-    const { auth } = useContext(AuthContext);
-    const { name, email, photoUrl } = auth;
-
+    const { auth, cambiarFotoPerfil } = useContext(AuthContext);
+    const { uid, name, email, photoUrl } = auth;
+    console.log('auth ', auth)
     const [image, setImage] = useState(null);
     const [changeImg, setChangeImg] = useState(false)
 
@@ -78,34 +78,20 @@ const ProfileScreen = () => {
         const blob = await file.blob()
         console.log('blob ', JSON.stringify(blob))
 
-        const imageRef = ref(storage, `avatare/123.jpeg`);
+        const imageRef = ref(storage, `avatar/avatar-${uid}.jpeg`);
 
         const snapshot = await uploadBytes(imageRef, blob, {
             contentType: "image/jpeg",
         });
 
         const url = await getDownloadURL(snapshot.ref);
-        console.log('url ', url)
-
+        //guardar url en mongo
+        cambiarFotoPerfil(uid, url);
     }
-
-    // function toDataURL(url, callback) {
-    //     var xhr = new XMLHttpRequest();
-    //     xhr.onload = function () {
-    //         var reader = new FileReader();
-    //         reader.onloadend = function () {
-    //             callback(reader.result);
-    //         }
-    //         reader.readAsDataURL(xhr.response);
-    //     };
-    //     xhr.open('GET', url);
-    //     xhr.responseType = 'blob';
-    //     xhr.send();
-    // }
 
     const loadImage = async () => {
         if (photoUrl) {
-            setImage(`data:image/jpeg;base64,${photoUrl}`)
+            setImage(`${photoUrl}`)
         } else {
             setImage("https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg")
         }
@@ -125,15 +111,6 @@ const ProfileScreen = () => {
                         size={90}
                         rounded
                         source={{ uri: image }}
-                    // source={photoUrl ?
-                    //     {
-                    //         uri: `data:image/jpeg;base64,${photoUrl}`
-                    //     }
-                    //     :
-                    //     {
-                    //         uri: "https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg"
-                    //     }
-                    // }
                     >
                         <Avatar.Accessory
                             onPress={pickImage}

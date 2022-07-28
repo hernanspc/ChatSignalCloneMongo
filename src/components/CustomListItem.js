@@ -15,7 +15,7 @@ const CustomListItem = ({ id, chatName, online, photoUrl, enterChat, email }) =>
                 rounded
                 size="medium"
                 source={photoUrl ?
-                    { uri: `data:image/jpeg;base64,${photoUrl}` }
+                    { uri: `${photoUrl}` }
                     :
                     { uri: "https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg" }
                 }

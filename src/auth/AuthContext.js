@@ -138,6 +138,32 @@ export const AuthProvider = ({ children }) => {
     }
 
 
+    const cambiarFotoPerfil = async (_id, photoUrl) => {
+        const resp = await fetchSinToken('user/cambiarFotoPerfil', { _id, photoUrl }, 'POST');
+        if (resp.ok) {
+            try {
+                await AsyncStorage.setItem('@token', resp.token)
+            } catch (e) {
+                console.log('funcion login: ', error.message)
+            }
+            const { usuario } = resp;
+            console.log('usuario ', usuario)
+            setAuth({
+                uid: usuario.uid,
+                checking: false,
+                logged: true,
+                name: usuario.nombre,
+                email: usuario.email,
+                photoUrl: usuario.photoUrl
+            });
+
+        }
+
+        return resp.ok;
+
+    }
+
+
     return (
         <AuthContext.Provider value={{
             auth,
@@ -145,7 +171,8 @@ export const AuthProvider = ({ children }) => {
             register,
             verificaToken,
             logout,
-            leerStorage
+            leerStorage,
+            cambiarFotoPerfil
         }}>
             {children}
         </AuthContext.Provider>

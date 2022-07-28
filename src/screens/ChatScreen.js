@@ -3,7 +3,8 @@ import {
     StyleSheet, Text, View,
     TouchableOpacity, SafeAreaView,
     KeyboardAvoidingView, Platform, ScrollView,
-    TextInput, TouchableWithoutFeedback, Keyboard
+    TextInput, TouchableWithoutFeedback, Keyboard,
+    ImageBackground
 } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { Avatar } from 'react-native-elements';
@@ -42,7 +43,7 @@ const ChatScreen = () => {
                         size="small"
                         rounded
                         source={route?.params?.photoUrl ?
-                            { uri: `data:image/jpeg;base64,${route?.params?.photoUrl}` }
+                            { uri: `${route?.params?.photoUrl}` }
                             :
                             { uri: "https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg" }
                         }
@@ -96,85 +97,88 @@ const ChatScreen = () => {
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
             <StatusBar style="light" />
 
-            <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? "padding" : "height"}
-                style={styles.container}
-                keyboardVerticalOffset={90}
+            <ImageBackground
+                resizeMode="cover"
+                source={require("../../assets/chatbg.png")}
+                style={{ flex: 1 }}
             >
-                <TouchableWithoutFeedback
-                    onPress={Keyboard.dismiss}
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === 'ios' ? "padding" : "height"}
+                    style={styles.container}
+                    keyboardVerticalOffset={90}
                 >
-                    <>
-                        <ScrollView style={{ paddingTop: 15 }}>
-                            {/* Chat goes on */}
-                            {chatState.mensajes.map((msg) =>
-                                msg.de === auth.uid ? (
-                                    <View style={styles.reciever}>
-                                        <Avatar
-                                            position="absolute"
-                                            containerStyle={{
-                                                position: 'absolute',
-                                                bottom: -15,
-                                                right: -5
-                                            }}
-                                            bottom={-15}
-                                            right={-5}
-                                            rounded
-                                            size={30}
-                                            source={photoUrl ? {
-                                                uri: `data:image/jpeg;base64,${photoUrl}`
-                                            } : { uri: "https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg" }}
-                                        />
-                                        <Text style={styles.recieverText}>{msg.mensaje}</Text>
-                                        <Text style={styles.recieverName}>Yo mismo</Text>
-                                        <Text style={styles.recieverTime}>{horaMes(msg.createdAt)}</Text>
-                                    </View>
-                                ) : (
-                                    <View style={styles.sender}>
-                                        <Avatar
-                                            position="absolute"
-                                            containerStyle={{
-                                                position: 'absolute',
-                                                bottom: -15,
-                                                left: -5
-                                            }}
-                                            bottom={-15}
-                                            left={-5}
-                                            rounded
-                                            size={30}
-                                            source={route?.params?.photoUrl ?
-                                                { uri: `data:image/jpeg;base64,${route?.params?.photoUrl}` }
-                                                :
-                                                { uri: "https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg" }
-                                            }
-                                        />
-                                        <Text style={styles.senderText}>{msg.mensaje}</Text>
-                                        <Text style={styles.senderName}>{route?.params?.chatName}</Text>
-                                        <Text style={styles.senderTime}>{horaMes(msg.createdAt)}</Text>
-
-                                    </View>
-                                )
-                            )}
-                        </ScrollView>
-                        <View style={styles.footer}>
-                            <TextInput
-                                value={mensaje}
-                                onChangeText={(text) => setMensaje(text)}
-                                onSubmitEditing={sendMessage}
-                                placeholder="Signal Message"
-                                style={styles.textInput}
-                            />
-                            <TouchableOpacity
-                                activeOpacity={0.5}
-                                onPress={sendMessage}
-                            >
-                                <Ionicons name='send' size={24} color="#2B68E6" />
-                            </TouchableOpacity>
-                        </View>
-                    </>
-                </TouchableWithoutFeedback>
-
-            </KeyboardAvoidingView>
+                    <TouchableWithoutFeedback
+                        onPress={Keyboard.dismiss}
+                    >
+                        <>
+                            <ScrollView style={{ paddingTop: 15 }}>
+                                {chatState.mensajes.map((msg, i) =>
+                                    msg.de === auth.uid ? (
+                                        <View style={styles.reciever} key={i}>
+                                            <Avatar
+                                                position="absolute"
+                                                containerStyle={{
+                                                    position: 'absolute',
+                                                    bottom: -15,
+                                                    right: -5
+                                                }}
+                                                bottom={-15}
+                                                right={-5}
+                                                rounded
+                                                size={30}
+                                                source={photoUrl ? {
+                                                    uri: `${photoUrl}`
+                                                } : { uri: "https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg" }}
+                                            />
+                                            <Text style={styles.recieverText}>{msg.mensaje}</Text>
+                                            <Text style={styles.recieverName}>Yo mismo</Text>
+                                            <Text style={styles.recieverTime}>{horaMes(msg.createdAt)}</Text>
+                                        </View>
+                                    ) : (
+                                        <View style={styles.sender} key={i}>
+                                            <Avatar
+                                                position="absolute"
+                                                containerStyle={{
+                                                    position: 'absolute',
+                                                    bottom: -15,
+                                                    left: -5
+                                                }}
+                                                bottom={-15}
+                                                left={-5}
+                                                rounded
+                                                size={30}
+                                                source={route?.params?.photoUrl ?
+                                                    { uri: `${route?.params?.photoUrl}` }
+                                                    :
+                                                    { uri: "https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg" }
+                                                }
+                                            />
+                                            <Text style={styles.senderText}>{msg.mensaje}</Text>
+                                            <Text style={styles.senderName}>{route?.params?.chatName}</Text>
+                                            <Text style={styles.senderTime}>{horaMes(msg.createdAt)}</Text>
+                                        </View>
+                                    )
+                                )}
+                            </ScrollView>
+                            <View style={styles.footer}>
+                                <TextInput
+                                    value={mensaje}
+                                    onChangeText={(text) => setMensaje(text)}
+                                    onSubmitEditing={sendMessage}
+                                    placeholder="Signal Message"
+                                    style={styles.textInput}
+                                />
+                                <TouchableOpacity
+                                    activeOpacity={0.5}
+                                    onPress={sendMessage}
+                                >
+                                    <Ionicons name='send' size={24} color="#2B68E6" />
+                                </TouchableOpacity>
+                            </View>
+                        </>
+                    </TouchableWithoutFeedback>
+                </KeyboardAvoidingView>
+            </ImageBackground>
         </SafeAreaView>
     )
 }
