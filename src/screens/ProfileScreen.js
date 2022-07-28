@@ -11,7 +11,7 @@ import { Avatar } from 'react-native-elements'
 // import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import { AuthContext } from '../auth/AuthContext';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, } from '@react-navigation/native';
 import * as ImagePicker from "expo-image-picker";
 import { firebase, storage } from '../config/firebase'
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";

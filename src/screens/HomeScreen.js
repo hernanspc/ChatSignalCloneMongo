@@ -24,7 +24,7 @@ const HomeScreen = () => {
         if (photoUrl) {
             setImage(photoUrl)
         }
-    }, [photoUrl])
+    }, [auth])
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -42,7 +42,7 @@ const HomeScreen = () => {
                         <Avatar
                             size={40}
                             rounded
-                            source={photoUrl ?
+                            source={auth?.photoUrl ?
                                 {
                                     uri: `${auth?.photoUrl}`
                                 }
@@ -51,7 +51,6 @@ const HomeScreen = () => {
                                     uri: "https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg"
                                 }
                             } >
-                            {/* <Avatar.Accessory size={15} /> */}
                         </Avatar>
                     </TouchableOpacity>
                 </View>
