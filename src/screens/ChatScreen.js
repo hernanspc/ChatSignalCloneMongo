@@ -4,7 +4,7 @@ import {
     TouchableOpacity, SafeAreaView,
     KeyboardAvoidingView, Platform, ScrollView,
     TextInput, TouchableWithoutFeedback, Keyboard,
-    ImageBackground
+    ImageBackground,
 } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { Avatar } from 'react-native-elements';
@@ -14,6 +14,7 @@ import { ChatContext } from '../context/chat/ChatContext';
 import { AuthContext } from '../auth/AuthContext';
 import { SocketContext } from '../context/SocketContext';
 import { horaMes } from '../helpers/horaMes'
+import EmojiPicker from 'rn-emoji-keyboard';
 
 const ChatScreen = () => {
     const navigation = useNavigation();
@@ -26,6 +27,15 @@ const ChatScreen = () => {
     const { photoUrl } = auth;
 
     const [mensaje, setMensaje] = useState("")
+
+    const [isOpen, setIsOpen] = useState(false)
+    const [newItem, setNewItem] = useState({
+        emoji: '*',
+        name: '',
+        price: 0,
+        isSold: false,
+        createAt: new Date(),
+    })
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -42,10 +52,11 @@ const ChatScreen = () => {
                     <Avatar
                         size="small"
                         rounded
-                        source={route?.params?.photoUrl ?
-                            { uri: `${route?.params?.photoUrl}` }
-                            :
-                            { uri: "https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg" }
+                        source={
+                            route?.params?.photoUrl ?
+                                { uri: `${route?.params?.photoUrl}` }
+                                :
+                                require('../../assets/Human/avatar-default.jpg')
                         }
                     />
 
@@ -93,6 +104,11 @@ const ChatScreen = () => {
         // console.log('route ', route.params)
     }
 
+    const handlePick = (emojiObject) => {
+        console.log(...mensaje, 'four')
+        setMensaje(...mensaje, 'four')
+    }
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
             <StatusBar style="light" />
@@ -126,9 +142,12 @@ const ChatScreen = () => {
                                                 right={-5}
                                                 rounded
                                                 size={30}
-                                                source={photoUrl ? {
-                                                    uri: `${photoUrl}`
-                                                } : { uri: "https://www.scottsdirectories.com/wp-content/uploads/2017/10/default.jpg" }}
+                                                source={
+                                                    photoUrl ? {
+                                                        uri: `${photoUrl}`
+                                                    } :
+                                                        require('../../assets/Human/avatar-default.jpg')
+                                                }
                                             />
                                             <Text style={styles.recieverText}>{msg.mensaje}</Text>
                                             <Text style={styles.recieverName}>Yo mismo</Text>
@@ -168,6 +187,17 @@ const ChatScreen = () => {
                                     placeholder="Signal Message"
                                     style={styles.textInput}
                                 />
+                                {/* <Text
+                                    style={styles.emoji}
+                                    onPress={() => setIsOpen(true)}
+                                >
+                                    {newItem.emoji}
+                                </Text>
+                                <EmojiPicker
+                                    onEmojiSelected={handlePick}
+                                    open={isOpen}
+                                    onClose={() => setIsOpen(false)}
+                                /> */}
                                 <TouchableOpacity
                                     activeOpacity={0.5}
                                     onPress={sendMessage}
@@ -267,5 +297,13 @@ const styles = StyleSheet.create({
         fontSize: 10,
         marginLeft: 10,
         color: "white",
+    },
+    emoji: {
+        // fontSize: 100,
+        borderWidth: 1,
+        borderColor: "#ddd",
+        borderRadius: 6,
+        padding: 10,
+        marginVertical: 6
     }
 })
