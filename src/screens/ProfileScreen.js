@@ -13,6 +13,8 @@ import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import { AuthContext } from '../auth/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from "expo-image-picker";
+import { firebase, storage } from '../config/firebase'
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const ProfileScreen = () => {
     const navigation = useNavigation();
@@ -29,6 +31,7 @@ const ProfileScreen = () => {
             headerBackTitle: "Inicio"
         })
     }, []);
+
 
     const pickImage = async () => {
         let permissionResult =
@@ -49,13 +52,6 @@ const ProfileScreen = () => {
             });
 
             setImage(result.uri)
-            toDataURL(result.uri, function (dataUrl) {
-                console.log('success')
-                //guarddar en bd
-                console.log('RESULT:', dataUrl)
-                //guardar en context 
-
-            })
 
             // if (result.cancelled) {
             //     Alert.alert("Alerta!", " Has cerrado la selección de imagenes", [
@@ -63,31 +59,49 @@ const ProfileScreen = () => {
             //     ]);
             // } else {
 
-            // uploadImage(result.uri)
-            //     .then(() => {
-            //         console.log("uploadImage2 Subida Correctamente");
-            //     })
-            //     .catch(() => {
-            //         console.log("uploadImage2 Error al actualizar avatar");
-            //     });
+            fileToBlobAndSaveFireBase(result.uri)
+            // .then(() => {
+            //     console.log("uploadImage2 Subida Correctamente");
+            // })
+            // .catch(() => {
+            //     console.log("uploadImage2 Error al actualizar avatar");
+            // });
 
             // }
         }
     };
 
-    function toDataURL(url, callback) {
-        var xhr = new XMLHttpRequest();
-        xhr.onload = function () {
-            var reader = new FileReader();
-            reader.onloadend = function () {
-                callback(reader.result);
-            }
-            reader.readAsDataURL(xhr.response);
-        };
-        xhr.open('GET', url);
-        xhr.responseType = 'blob';
-        xhr.send();
+
+
+    const fileToBlobAndSaveFireBase = async (path) => {
+        const file = await fetch(path)
+        const blob = await file.blob()
+        console.log('blob ', JSON.stringify(blob))
+
+        const imageRef = ref(storage, `avatare/123.jpeg`);
+
+        const snapshot = await uploadBytes(imageRef, blob, {
+            contentType: "image/jpeg",
+        });
+
+        const url = await getDownloadURL(snapshot.ref);
+        console.log('url ', url)
+
     }
+
+    // function toDataURL(url, callback) {
+    //     var xhr = new XMLHttpRequest();
+    //     xhr.onload = function () {
+    //         var reader = new FileReader();
+    //         reader.onloadend = function () {
+    //             callback(reader.result);
+    //         }
+    //         reader.readAsDataURL(xhr.response);
+    //     };
+    //     xhr.open('GET', url);
+    //     xhr.responseType = 'blob';
+    //     xhr.send();
+    // }
 
     const loadImage = async () => {
         if (photoUrl) {
